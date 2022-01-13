@@ -4,9 +4,9 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-# include "minilibx_mms_20191025_beta/mlx.h"
-# include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
+# include "mlx/mlx.h"
+# include "minilibft/libft.h"
+# include "gnl/get_next_line.h"
 
 typedef struct s_data
 {

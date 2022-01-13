@@ -59,7 +59,7 @@ static void ft_fill_matrix(int *nums_line, char *line)
 	nums = ft_split(line, ' ');
 	while (nums[i])
 	{
-		ft_validate_dot(nums[i]);
+		// ft_validate_dot(nums[i]);
 		nums_line[i] = ft_atoi(nums[i]);
 		free(nums[i]);
 		i++;

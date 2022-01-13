@@ -7,8 +7,8 @@ CC			=	gcc
 FLAGS		=	-Wall -Wextra -Werror
 REMOVE		=	rm -f
 # MLX_NAME	=	minilibx_mms_20191025_beta
-LIBFT		=	-L. libft/libft.a
-GNL			=	-L. get_next_line/get_next_line.a
+LIBFT		=	-L. minilibft/libft.a
+GNL			=	-L. gnl/get_next_line.a
 # MLX			=	libmlx.dylib -framework OpenGL -framework AppKit
 
 .PHONY		:	all clean libftclean gnlclean fclean re
@@ -16,9 +16,9 @@ GNL			=	-L. get_next_line/get_next_line.a
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS)
-				make -C libft
-				make -C get_next_line
-				# make -C $(MLX_NAME)
+				make -C minilibft
+				make -C gnl
+				# make -C mlx
 				$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(GNL) $(MLX)
 
 %.o			:	%.c $(HEADER)
@@ -29,13 +29,13 @@ clean		:
 				# libmlx.dylib
 
 libftclean	:
-				make fclean -C libft
+				make fclean -C minilibft
 
 gnlclean	:
-				make fclean -C get_next_line
+				make fclean -C gnl
 
 # mlxclean	:
-# 				make clean -C $(MLX_NAME)
+# 				make clean -C mlx
 
 fclean		:	clean libftclean gnlclean
 				$(RM) $(NAME)
