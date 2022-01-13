@@ -1,84 +1,96 @@
 #include "fdf.h"
 
+static float	ft_max(float a, float b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
 static float	ft_mod(float x)
 {
 	if (x < 0)
 		return (-x);
-	else
-		return (x);
-}
-
-static float	ft_make_3d_x(float x, float y, int z)
-{
-	x = (x - y) * cos(0.523599);
 	return (x);
 }
 
-static float	ft_make_3d_y(float x, float y, int z)
+static void	ft_isometric(float *x, float *y, int z)
 {
-	y = (x + y) * sin(0.523599) - z;
-	return (y);
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z;
 }
 
-static void	ft_join_dots(float x, float y, float x1, float y1, t_data *data)
+static void ft_make_3d(t_data *data)
 {
-	float	x_step;
-	float	y_step;
-	float	max;
-	float		z;
-	float		z1;
+	ft_isometric(&data->x, &data->y, data->z);
+	ft_isometric(&data->x1, &data->y1, data->z1);
+}
 
-	z =  data->matrix[(int)y][(int)x];
-	z1 =  data->matrix[(int)y1][(int)x1];
-	x *= data->zoom;
-	y *= data->zoom;
-	x1 *= data->zoom;
-	y1 *= data->zoom;
-	if (z || z1)
+static void	ft_init_dot(t_data *data)
+{
+	data->z =  data->matrix[(int)data->y][(int)data->x];
+	data->z1 =  data->matrix[(int)data->y1][(int)data->x1];
+	data->x *= data->zoom;
+	data->y *= data->zoom;
+	data->x1 *= data->zoom;
+	data->y1 *= data->zoom;
+	if (data->z || data->z1)
 		data->color = 0xe80c0c;
 	else
 		data->color = 0xffffff;
-	// x = ft_make_3d_x(x, y, z);
-	// x1 = ft_make_3d_x(x1, y1, z1);
-	// y = ft_make_3d_y(x, y, z);
-	// y1 = ft_make_3d_y(x1, y1, z1);
-	x += 150;
-	x1 += 150;
-	y += 150;
-	y1 += 150;
-	x_step = x1 - x;
-	y_step = y1 - y;
-	if (ft_mod(x_step) > ft_mod(y_step))
-		max = x_step;
-	else
-		max = y_step;
+	ft_make_3d(data);
+	data->x += 150;
+	data->x1 += 150;
+	data->y += 150;
+	data->y1 += 150;
+}
+
+static void	ft_join_dots(t_data data)
+{
+	float	x_step;
+	float	y_step;
+	int		max;
+
+	data.zoom = 30;
+	ft_init_dot(&data);
+	x_step = data.x1 - data.x;
+	y_step = data.y1 - data.y;
+	max = ft_max(ft_mod(x_step), ft_mod(y_step));
 	x_step /= max;
 	y_step /= max;
-	while ((int)(x - x1) || (int)(y - y1))
+	while ((int)(data.x - data.x1) || (int)(data.y - data.y1))
 	{
-		// ft_mlx_pixel_put(data, x, y, data->color);
-		x += x_step;
-		y += y_step;
+		if (data.x < 1500.0 && data.x >= 0.0
+			&& data.y < 1500.0 && data.y >= 0.0)
+		ft_mlx_pixel_put(&data.img, data.x, data.y, data.color);
+		data.x += x_step;
+		data.y += y_step;
 	}
 }
 
 void	ft_print_map(t_data *data)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < data->height)
+	data->y = 0;
+	while (data->y < data->height)
 	{
-		x = 0;
-		while (x < data->width)
+		data->x = 0;
+		while (data->x < data->width)
 		{
-			if (x < data->width - 1)
-				ft_join_dots(x, y, x + 1, y, data);
-			if (y < data->height - 1)
-				ft_join_dots(x, y, x, y + 1, data);
-			x++;
+			if (data->x < data->width - 1)
+			{
+				data->x1 = data->x + 1;
+				data->y1 = data->y;
+				ft_join_dots(*data);
+			}
+			if (data->y < data->height - 1)
+			{
+				data->x1 = data->x;
+				data->y1 = data->y + 1;
+				ft_join_dots(*data);
+			}
+			data->x++;
 		}
-		y++;
+		data->y++;
 	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.img, 0, 0);
 }

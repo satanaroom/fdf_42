@@ -7,10 +7,6 @@ static void	ft_validate_dot(char *dot_line)
 	i = 0;
 	if (ft_isalpha(dot_line[i]))
 		printf("ERROR: %c\n", dot_line[i]);
-	// if (ft_isdigit(dot_line))
-	// 	printf("%s", "is digit");
-	// else
-	// 	printf("%s", "not digit");
 }
 
 static int	ft_get_width(char *map_name)
@@ -79,7 +75,7 @@ void	ft_get_map(char *map_name, t_data *data)
 	i = 0;
 	while (i <= data->height)
 	{
-		data->matrix[i] = (int *)malloc(sizeof(int) * (data->width + 1));
+		data->matrix[i] = (int *)malloc(sizeof(int) * (data->width + 2));
 		i++;
 	}
 	i = 0;
