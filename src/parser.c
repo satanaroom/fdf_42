@@ -1,13 +1,4 @@
-#include "fdf.h"
-
-static void	ft_validate_dot(char *dot_line)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isalpha(dot_line[i]))
-		printf("ERROR: %c\n", dot_line[i]);
-}
+#include "../fdf.h"
 
 static int	ft_get_width(char *map_name)
 {
@@ -27,8 +18,8 @@ static int	ft_get_width(char *map_name)
 
 static int	ft_get_height(char *map_name)
 {
-	int     height;
 	char	*line;
+	int		height;
 	int		fd;
 
 	fd = open(map_name, O_RDONLY, 0);
@@ -46,7 +37,7 @@ static int	ft_get_height(char *map_name)
 	return (height);
 }
 
-static void ft_fill_matrix(int *nums_line, char *line)
+static void	ft_fill_matrix(int *nums_line, char *line)
 {
 	char	**nums;
 	int		i;
@@ -55,7 +46,7 @@ static void ft_fill_matrix(int *nums_line, char *line)
 	nums = ft_split(line, ' ');
 	while (nums[i])
 	{
-		// ft_validate_dot(nums[i]);
+		ft_validate_dot(nums[i]);
 		nums_line[i] = ft_atoi(nums[i]);
 		free(nums[i]);
 		i++;
@@ -63,11 +54,9 @@ static void ft_fill_matrix(int *nums_line, char *line)
 	free(nums);
 }
 
-void	ft_get_map(char *map_name, t_data *data)
+static void	ft_init_matrix(char *map_name, t_data *data)
 {
-	char	*line;
-	int		fd;
-	int		i;
+	int	i;
 
 	data->width = ft_get_width(map_name);
 	data->height = ft_get_height(map_name);
@@ -75,9 +64,18 @@ void	ft_get_map(char *map_name, t_data *data)
 	i = 0;
 	while (i <= data->height)
 	{
-		data->matrix[i] = (int *)malloc(sizeof(int) * (data->width + 2));
+		data->matrix[i] = (int *)malloc(sizeof(int) * (data->width + 1));
 		i++;
 	}
+}
+
+void	ft_parse_map(char *map_name, t_data *data)
+{
+	char	*line;
+	int		fd;
+	int		i;
+
+	ft_init_matrix(map_name, data);
 	i = 0;
 	fd = open(map_name, O_RDONLY, 0);
 	if (fd <= 0)

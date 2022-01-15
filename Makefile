@@ -1,12 +1,12 @@
 NAME		=	fdf
 
-SRCS		=	fdf.c fdf_utils.c get_map.c print_map.c
+SRCS		=	fdf.c src/utils.c src/parser.c src/draw.c src/init.c src/isometric.c
 HEADER		=	fdf.h
 OBJS		=	$(SRCS:%.c=%.o)
 CC			=	clang
 FLAGS		=	-Wall -Wextra -Werror
 REMOVE		=	rm -f
-LIBFT		=	-L. minilibft/libft.a
+LIBFT		=	-L. minilibft/minilibft.a
 GNL			=	-L. gnl/get_next_line.a
 MLX			=	libmlx.dylib -framework OpenGL -framework AppKit
 

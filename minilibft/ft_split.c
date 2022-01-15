@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "minilibft.h"
 
 static char	**ft_clear(char **tab)
 {
