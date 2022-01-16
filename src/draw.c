@@ -56,4 +56,5 @@ void	ft_draw(t_data *data)
 		data->y++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.img, 0, 0);
+	ft_customize_window(data);
 }

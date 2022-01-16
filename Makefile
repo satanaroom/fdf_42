@@ -1,6 +1,8 @@
 NAME		=	fdf
 
-SRCS		=	fdf.c src/utils.c src/parser.c src/draw.c src/init.c src/isometric.c
+SRCS		=	fdf.c src/utils.c src/parser.c\
+				src/draw.c src/init.c src/isometric.c\
+				src/key_handler.c
 HEADER		=	fdf.h
 OBJS		=	$(SRCS:%.c=%.o)
 CC			=	clang

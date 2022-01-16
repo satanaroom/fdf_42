@@ -1,54 +1,54 @@
 #include "fdf.h"
 
-static void	ft_close(int keycode, t_data *data)
+void	ft_customize_window(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->mlx_win);
-	exit(0);
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05, 0x7CFC00, "To interact with the map use");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 15, 0x7CFC00, "rotation: X-axis - A and D keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 30, 0x7CFC00, "rotation: Y-axis - W and S keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 45, 0x7CFC00, "rotation: Z-axis - Z and C keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 60, 0x7CFC00, "rotation: All-axis - Q and E keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 75, 0x7CFC00, "shift: arrows");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 90, 0x7CFC00, "zoom: - and + keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 105, 0x7CFC00, "set 2d or 3d: 2 and 3 keys");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 120, 0x7CFC00, "set default 3d position: < key");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 135, 0x7CFC00, "set 2d side position: > key");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 150, 0x7CFC00, "set 2d other side position: / key");
+	mlx_string_put(data->mlx, data->mlx_win, W_WIDTH * 0.05,
+		W_HEIGHT * 0.05 + 165, 0x7CFC00, "exit: Esc key");
 }
 
 static int	ft_parse_key(int key, t_data *data)
 {
 	if (key == 53)
-		ft_close(53, data);
-	if (key == 24)
-		data->zoom += 1;
-	if (key == 27)
-		data->zoom -= 1;
-	if (key == 126)
-		data->shift_y -= 5;
-	if (key == 125)
-		data->shift_y += 5;
-	if (key == 123)
-		data->shift_x -= 5;
-	if (key == 124)
-		data->shift_x += 5;
+		ft_close(data);
+	if (key == 24 || key == 27)
+		ft_zoom(key, data);
+	if (key == 126 || key == 125 || key == 123 || key == 124)
+		ft_shift(key, data);
 	if (key == 19)
 		data->isometric = 0;
 	if (key == 20)
 		data->isometric = 1;
 	if (key == 12)
-		data->angle += 0.01;
+		data->angle += 0.1;
 	if (key == 14)
-		data->angle -= 0.01;
-	if (key == 13)
-		data->angle_x += 0.01;
-	if (key == 1)
-		data->angle_x -= 0.01;
-	if (key == 0)
-		data->angle_y += 0.01;
-	if (key == 2)
-		data->angle_y -= 0.01;
-	if (key == 6)
-		data->angle_z += 0.01;
-	if (key == 8)
-		data->angle_z -= 0.01;
-	if (key == 7)
-	{
-		data->angle = 1;
-		data->angle_x = 0;
-		data->angle_y = 0;
-		data->angle_z = 0;
-	}
+		data->angle -= 0.1;
+	if (key == 13 || key == 1 || key == 0
+		|| key == 2 || key == 6 || key == 8)
+		ft_angle_rotate(key, data);
+	if (key == 43 || key == 47 || key == 44)
+		ft_default(key, data);
 	ft_draw(data);
 	return (0);
 }

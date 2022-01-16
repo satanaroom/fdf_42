@@ -40,7 +40,7 @@ typedef struct s_data
 	double	angle_x;
 	double	angle_y;
 	double	angle_z;
-	int		zoom;
+	double	zoom;
 
 	void	*mlx;
 	void	*mlx_win;
@@ -59,5 +59,11 @@ void		ft_init_map(t_data *data);
 void		ft_init_dot(t_data *data);
 void		ft_validate_dot(char *dot_line);
 void		ft_rotate_map(t_data *data);
+void		ft_close(t_data *data);
+void		ft_zoom(int key, t_data *data);
+void		ft_shift(int key, t_data *data);
+void		ft_default(int key, t_data *data);
+void		ft_angle_rotate(int key, t_data *data);
+void		ft_customize_window(t_data *data);
 
 #endif
