@@ -67,5 +67,4 @@ int	main(int argc, char **argv)
 	ft_draw(data);
 	mlx_hook(data->mlx_win, 2, 0, ft_parse_key, data);
 	mlx_loop(data->mlx);
-	free(data);
 }

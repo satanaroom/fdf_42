@@ -40,14 +40,14 @@ void	ft_default(int key, t_data *data)
 		data->angle = 0;
 		data->angle_x = 0;
 		data->angle_y = 0;
-		data->angle_z = 0;
+		data->angle_z = -0.79;
 	}
 	if (key == 44)
 	{
 		data->angle = 0;
 		data->angle_x = 0;
 		data->angle_y = 0;
-		data->angle_z = 1;
+		data->angle_z = 0.788;
 	}
 }
 

@@ -33,6 +33,7 @@ static int	ft_get_height(char *map_name)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	return (height);
 }
@@ -89,6 +90,7 @@ void	ft_parse_map(char *map_name, t_data *data)
 		i++;
 	}
 	free(line);
+	free(data->matrix[i]);
 	data->matrix[i] = NULL;
 	close(fd);
 }

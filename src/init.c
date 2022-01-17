@@ -18,7 +18,7 @@ void	ft_init_image(t_data *data)
 void	ft_init_map(t_data *data)
 {
 	data->shift_x = 550;
-	data->shift_y = 150;
+	data->shift_y = 250;
 	data->isometric = 1;
 	data->color = 0xffffff;
 	data->angle = 1;
