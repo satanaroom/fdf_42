@@ -63,7 +63,7 @@ static void	ft_init_matrix(char *map_name, t_data *data)
 	data->height = ft_get_height(map_name);
 	data->matrix = (int **)malloc(sizeof(int *) * (data->height + 1));
 	i = 0;
-	while (i <= data->height)
+	while (i < data->height)
 	{
 		data->matrix[i] = (int *)malloc(sizeof(int) * (data->width + 1));
 		i++;
@@ -90,7 +90,6 @@ void	ft_parse_map(char *map_name, t_data *data)
 		i++;
 	}
 	free(line);
-	free(data->matrix[i]);
 	data->matrix[i] = NULL;
 	close(fd);
 }
