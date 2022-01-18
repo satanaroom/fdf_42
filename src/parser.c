@@ -10,6 +10,8 @@ static int	ft_get_width(char *map_name)
 	if (fd <= 0)
 		ft_error("could't read map");
 	line = get_next_line(fd);
+	if (!line)
+		ft_error("empty file");
 	width = ft_word_count(line, ' ');
 	free(line);
 	close(fd);
